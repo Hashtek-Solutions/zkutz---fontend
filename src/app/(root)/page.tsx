@@ -19,9 +19,7 @@ export default function Home() {
         <About />
         <Features />
         <Discover />
-        <AnimatedTestimonialsDemo/>
-        <Download/>
-        <Footer/>
+        <AnimatedTestimonialsDemo/> 
       </MaxWidthContainer>
     </main>
   );

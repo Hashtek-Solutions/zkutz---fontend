@@ -39,7 +39,7 @@ const Discover = () => {
 
 export default Discover;
 
-const DiscoverCard = ({
+export const DiscoverCard = ({
   index,
   title,
   description,
