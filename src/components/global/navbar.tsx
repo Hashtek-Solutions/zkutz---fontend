@@ -9,7 +9,7 @@ import { Menu } from "lucide-react";
 
 const Navbar = () => {
   const navItems = [
-    { label: "Home", href: "/" },
+    // { label: "Home", href: "/" },
     { label: "About Us", href: "/about" },
     { label: "Features", href: "/features" },
     { label: "Download App", href: "/" },

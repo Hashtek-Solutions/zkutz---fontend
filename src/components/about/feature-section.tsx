@@ -33,14 +33,14 @@ export function FeatureSection({
               />
             </div>
             <div className="flex-1"></div>
-            <div className=" absolute top-1/2 right-0 -translate-x-[12%] -translate-y-1/2 rounded-[32px] bg-black border">
+            <div className=" absolute top-1/2 right-0 -translate-x-[19%] -translate-y-1/2 rounded-[32px] bg-black border">
               <FeatureCard title={title} features={features} />
             </div>
           </div>
         ) : (
           <div className="relative w-full flex">
             <div className="flex-1"></div>
-            <div className="absolute top-1/2 left-0 translate-x-[12%] z-10 -translate-y-1/2 rounded-[32px] bg-black border">
+            <div className="absolute top-1/2 left-0 translate-x-[19%] z-10 -translate-y-1/2 rounded-[32px] bg-black border">
               <FeatureCard title={title} features={features} />
             </div>
 

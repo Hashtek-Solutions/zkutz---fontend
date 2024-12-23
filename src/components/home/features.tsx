@@ -22,7 +22,7 @@ const features = [
   },
   {
     title: "Live Queue\nTracking",
-    description: "See real-time wait times and make smart bookings.",
+    description: "See real-time wait times and make smart bookings with ease.",
     gradient: "from-black/50 via-yellow-900 to-yellow-500/30",
     image: "/feature2.png",
   },
@@ -202,7 +202,7 @@ export default function Features() {
                     <h3 className="text-2xl text-center whitespace-pre-line mb-2">
                       {feature.title}
                     </h3>
-                    <p className="text-sm text-white/80 text-center">
+                    <p className="text-sm text-white/80 text-center max-w-xs">
                       {feature.description}
                     </p>
                   </div>

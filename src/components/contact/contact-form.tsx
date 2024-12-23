@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
+import Image from "next/image";
 
 export default function ContactForm() {
   return (
@@ -64,14 +64,26 @@ export default function ContactForm() {
 
           <div className="space-y-6">
             <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border">
-              <Mail className="w-6 h-6 mt-1" />
+              <Image
+                src="/contact-icon (1).png"
+                alt="Logo"
+                width={50}
+                height={50}
+                className="w-6 h-5 mt-1"
+              />
               <div>
                 <p className="text-lg">info@zkutz.com</p>
               </div>
             </div>
 
             <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border">
-              <Phone className="w-6 h-6 mt-1" />
+              <Image
+                src="/contact-icon (4).png"
+                alt="Logo"
+                width={50}
+                height={50}
+                className="w-5 h-5 mt-1"
+              />
               <div>
                 <p>Call us on</p>
                 <p className="text-lg">(844) 646-8546</p>
@@ -79,7 +91,13 @@ export default function ContactForm() {
             </div>
 
             <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border">
-              <MapPin className="w-6 h-6 mt-1" />
+            <Image
+                src="/contact-icon (2).png"
+                alt="Logo"
+                width={50}
+                height={50}
+                className="w-5 h-6 mt-1"
+              />
               <div>
                 <p className="text-lg">1234 Placeholder Lane</p>
                 <p>Faketown, FA 56789</p>
@@ -88,7 +106,13 @@ export default function ContactForm() {
             </div>
 
             <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border">
-              <MessageCircle className="w-6 h-6 mt-1" />
+            <Image
+                src="/contact-icon (3).png"
+                alt="Logo"
+                width={50}
+                height={50}
+                className="w-7 h-6 mt-1"
+              />
               <div>
                 <p>
                   For app-related queries or assistance, feel free to contact

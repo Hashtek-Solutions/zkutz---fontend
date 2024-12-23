@@ -8,7 +8,7 @@ const About = () => {
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold">
           Who We Are
         </h2>
-        <p className="text-base sm:text-lg font-light">
+        <p className="text-base sm:text-xl font-light">
           At Zktuz, we&apos;re more than just a place to get a haircut -
           we&apos;re a community hub where style meets tradition. With years of
           expertise, a passion for precision, and a commitment to keeping you
