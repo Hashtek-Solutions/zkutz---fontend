@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import TextGradientOpacity from "./text-reveal";
 
 const About = () => {
   return (
@@ -8,14 +9,16 @@ const About = () => {
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold">
           Who We Are
         </h2>
-        <p className="text-base sm:text-xl font-light">
+        {/* Description */}
+        <TextGradientOpacity text="At Zktuz, we're more than just a place to get a haircut - we're a community hub where style meets tradition. With years of expertise, a passion for precision, and a commitment to keeping you looking your best, we pride ourselves on delivering timeless cuts, fresh fades, and top-notch grooming services. From the moment you step through our doors, it's all about you." />
+        {/* <p className="text-base sm:text-xl font-light">
           At Zktuz, we&apos;re more than just a place to get a haircut -
           we&apos;re a community hub where style meets tradition. With years of
           expertise, a passion for precision, and a commitment to keeping you
           looking your best, we pride ourselves on delivering timeless cuts,
           fresh fades, and top-notch grooming services. From the moment you step
           through our doors, it&apos;s all about you.
-        </p>
+        </p> */}
         <div className="flex flex-col sm:flex-row gap-6 sm:gap-x-14 items-start sm:items-center">
           <div className="space-y-2">
             <h2 className="text-2xl sm:text-3xl font-medium">50K+</h2>
