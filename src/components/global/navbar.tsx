@@ -37,9 +37,9 @@ const Navbar = () => {
               </li>
             ))}
             <li className="flex items-center gap-x-2 p-1 text-sm text-white">
-              <Button>
-                <Link href="/contact">Contact Us</Link>
-              </Button>
+              <Link href="/contact">
+                <Button>Contact Us</Button>
+              </Link>
             </li>
           </ul>
         </div>
