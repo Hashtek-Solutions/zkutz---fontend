@@ -30,7 +30,7 @@ const TextGradientOpacity: React.FC<TextGradientOpacityProps> = ({ text }) => {
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top 80%', // Start animation when the top of the text is 80% from the top of the viewport
-            end: 'bottom 60%',
+            end: 'bottom 45%',
             scrub: true,
           },
         }
