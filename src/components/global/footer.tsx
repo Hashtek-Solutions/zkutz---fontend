@@ -2,16 +2,16 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import AppLogo from "./app-logo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight } from "lucide-react";
 
 const sections = [
   {
     title: "Quick Links",
     links: [
-      { name: "Home", href: "#" },
-      { name: "About", href: "#" },
-      { name: "Services", href: "#" },
-      { name: "Contact", href: "#" },
+      { name: "Home", href: "/" },
+      { name: "About", href: "/about" },
+      { name: "Services", href: "/features" },
+      { name: "Contact", href: "/contact" },
     ],
   },
   {
@@ -110,4 +110,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

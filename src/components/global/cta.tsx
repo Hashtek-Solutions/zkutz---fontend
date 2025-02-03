@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const CTA = () => {
   return (
@@ -59,12 +60,14 @@ const CTA = () => {
       </CardContent>
       <CardFooter className="mt-2 sm:mt-6 flex-col items-start gap-3">
         <h2 className="text-xl font-semibold sm:text-2xl">For Salon Owners</h2>
-        <Button
-          className="border border-gray-500 px-6 py-4 sm:px-8 sm:py-6"
-          variant="ghost"
-        >
-          Contact Us
-        </Button>
+        <Link href={"/contact"}>
+          <Button
+            className="border border-gray-500 px-6 py-4 sm:px-8 sm:py-6"
+            variant="ghost"
+          >
+            Contact Us
+          </Button>
+        </Link>
       </CardFooter>
       <div className="mt-8 flex justify-center lg:absolute lg:bottom-0 lg:right-8 xl:right-28">
         <Image
