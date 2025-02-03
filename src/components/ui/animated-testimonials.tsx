@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react"
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
