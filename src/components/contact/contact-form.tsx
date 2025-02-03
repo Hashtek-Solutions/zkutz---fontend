@@ -6,7 +6,6 @@ import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
-import { sendEnquiry } from "@/actions/contact";
 import { toast } from "sonner";
 import React from "react"; // Added import for React
 
