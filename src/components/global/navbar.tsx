@@ -64,7 +64,9 @@ const Navbar = () => {
                   {item.label}
                 </Link>
               ))}
-              <Button className="mt-4">Contact Us</Button>
+              <Link href={"/contact"}>
+                <Button className="mt-4">Contact Us</Button>
+              </Link>
             </nav>
           </SheetContent>
         </Sheet>
