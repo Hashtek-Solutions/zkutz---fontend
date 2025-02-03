@@ -4,10 +4,47 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
+import { useState } from "react";
+import { useFormStatus } from "react-dom";
+import { sendEnquiry } from "@/actions/contact";
+import { toast } from "sonner";
+import React from "react"; // Added import for React
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      type="submit"
+      disabled={pending}
+      className="bg-white text-black hover:bg-gray-100 rounded-full px-8"
+    >
+      {pending ? "Sending..." : "Send Message"}
+    </Button>
+  );
+}
 
 export default function ContactForm() {
+  const [formKey, setFormKey] = useState(0); // Used to reset form
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault(); // Prevent default form submission
+    const formData = new FormData(e.currentTarget);
+    const result = await sendEnquiry(formData);
+
+    if (result.success) {
+      toast.success("Message sent successfully!");
+      // Reset form by updating key
+      setFormKey((prev) => prev + 1);
+      // Reset form fields
+      e.currentTarget.reset();
+    } else {
+      toast.error(result.error || "Failed to send message");
+    }
+  }
+
   return (
-    <div className=" bg-black text-white p-6 md:p-12">
+    <div className="bg-black text-white p-6 md:p-12">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
         {/* Left Column - Form */}
         <div>
@@ -17,13 +54,15 @@ export default function ContactForm() {
             back to you shortly:
           </p>
 
-          <form className="space-y-6">
+          <form key={formKey} onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm mb-2">
                 Name
               </label>
               <Input
                 id="name"
+                name="name"
+                required
                 placeholder="Type full name here"
                 className="bg-zinc-900 rounded-full border-zinc-800 text-white placeholder:text-zinc-500"
               />
@@ -35,7 +74,9 @@ export default function ContactForm() {
               </label>
               <Input
                 id="email"
+                name="email"
                 type="email"
+                required
                 placeholder="Enter Email"
                 className="bg-zinc-900 rounded-full border-zinc-800 text-white placeholder:text-zinc-500"
               />
@@ -47,14 +88,14 @@ export default function ContactForm() {
               </label>
               <Textarea
                 id="message"
+                name="message"
+                required
                 rows={6}
                 className="bg-zinc-900 rounded-2xl border-zinc-800 text-white placeholder:text-zinc-500 resize-none"
               />
             </div>
 
-            <Button className="bg-white text-black hover:bg-gray-100 rounded-full px-8">
-              Send Message
-            </Button>
+            <SubmitButton />
           </form>
         </div>
 
@@ -66,7 +107,7 @@ export default function ContactForm() {
             <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border">
               <Image
                 src="/contact-icon (1).png"
-                alt="Logo"
+                alt="Email icon"
                 width={50}
                 height={50}
                 className="w-6 h-5 mt-1"
@@ -79,7 +120,7 @@ export default function ContactForm() {
             <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border">
               <Image
                 src="/contact-icon (4).png"
-                alt="Logo"
+                alt="Phone icon"
                 width={50}
                 height={50}
                 className="w-5 h-5 mt-1"
@@ -91,9 +132,9 @@ export default function ContactForm() {
             </div>
 
             <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border">
-            <Image
+              <Image
                 src="/contact-icon (2).png"
-                alt="Logo"
+                alt="Location icon"
                 width={50}
                 height={50}
                 className="w-5 h-6 mt-1"
@@ -106,9 +147,9 @@ export default function ContactForm() {
             </div>
 
             <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border">
-            <Image
+              <Image
                 src="/contact-icon (3).png"
-                alt="Logo"
+                alt="Support icon"
                 width={50}
                 height={50}
                 className="w-7 h-6 mt-1"
