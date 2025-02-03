@@ -28,15 +28,24 @@ export default function ContactForm() {
   const [formKey, setFormKey] = useState(0); // Used to reset form
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const result = await sendEnquiry(formData);
+
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      body: JSON.stringify({
+        name: formData.get("name"),
+        email: formData.get("email"),
+        message: formData.get("message"),
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const result = await response.json();
 
     if (result.success) {
       toast.success("Message sent successfully!");
-      // Reset form by updating key
       setFormKey((prev) => prev + 1);
-      // Reset form fields
       e.currentTarget.reset();
     } else {
       toast.error(result.error || "Failed to send message");
