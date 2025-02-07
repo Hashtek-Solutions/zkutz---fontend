@@ -15,8 +15,8 @@ export async function POST(req: Request) {
     const { name, email, message } = formData;
 
     const command = new SendEmailCommand({
-      Source: process.env.AWS_SES_FROM_EMAIL!,
-      Destination: { ToAddresses: [process.env.AWS_SES_TO_EMAIL!] },
+      Source: process.env.AWS_SES_VERIFIED_EMAIL!,
+      Destination: { ToAddresses: [process.env.AWS_SES_VERIFIED_EMAIL!] },
       Message: {
         Subject: { Data: `New Enquiry from ${name}` },
         Body: {
