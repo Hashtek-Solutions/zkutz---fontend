@@ -5,49 +5,55 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import { useState } from "react";
-import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
-import React from "react"; // Added import for React
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <Button
-      type="submit"
-      disabled={pending}
-      className="bg-white text-black hover:bg-gray-100 rounded-full px-8"
-    >
-      {pending ? "Sending..." : "Send Message"}
-    </Button>
-  );
-}
 
 export default function ContactForm() {
-  const [formKey, setFormKey] = useState(0); // Used to reset form
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const resetForm = () => {
+    setFormData({
+      name: "",
+      email: "",
+      message: ""
+    });
+  };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    setIsSubmitting(true);
 
-    const response = await fetch("/api/contact", {
-      method: "POST",
-      body: JSON.stringify({
-        name: formData.get("name"),
-        email: formData.get("email"),
-        message: formData.get("message"),
-      }),
-      headers: { "Content-Type": "application/json" },
-    });
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
+      });
 
-    const result = await response.json();
+      const result = await response.json();
 
-    if (result.success) {
-      toast.success("Message sent successfully!");
-      setFormKey((prev) => prev + 1);
-      e.currentTarget.reset();
-    } else {
-      toast.error(result.error || "Failed to send message");
+      if (result.success) {
+        toast.success("Message sent successfully!");
+        resetForm();
+      } else {
+        toast.error(result.error || "Failed to send message");
+      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -62,7 +68,7 @@ export default function ContactForm() {
             back to you shortly:
           </p>
 
-          <form key={formKey} onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm mb-2">
                 Name
@@ -71,6 +77,8 @@ export default function ContactForm() {
                 id="name"
                 name="name"
                 required
+                value={formData.name}
+                onChange={handleChange}
                 placeholder="Type full name here"
                 className="bg-zinc-900 rounded-full border-zinc-800 text-white placeholder:text-zinc-500"
               />
@@ -85,6 +93,8 @@ export default function ContactForm() {
                 name="email"
                 type="email"
                 required
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="Enter Email"
                 className="bg-zinc-900 rounded-full border-zinc-800 text-white placeholder:text-zinc-500"
               />
@@ -98,12 +108,20 @@ export default function ContactForm() {
                 id="message"
                 name="message"
                 required
+                value={formData.message}
+                onChange={handleChange}
                 rows={6}
                 className="bg-zinc-900 rounded-2xl border-zinc-800 text-white placeholder:text-zinc-500 resize-none"
               />
             </div>
 
-            <SubmitButton />
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="bg-white text-black hover:bg-gray-100 rounded-full px-8"
+            >
+              {isSubmitting ? "Sending..." : "Send Message"}
+            </Button>
           </form>
         </div>
 
@@ -112,26 +130,26 @@ export default function ContactForm() {
           <h2 className="text-4xl font-serif">Get In Touch</h2>
 
           <div className="space-y-6">
-            <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border">
+            <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border border-zinc-800">
               <Image
                 src="/contact-icon (1).png"
                 alt="Email icon"
-                width={50}
-                height={50}
-                className="w-6 h-5 mt-1"
+                width={24}
+                height={20}
+                className="mt-1"
               />
               <div>
                 <p className="text-lg">info@zkutz.com</p>
               </div>
             </div>
 
-            <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border">
+            <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border border-zinc-800">
               <Image
                 src="/contact-icon (4).png"
                 alt="Phone icon"
-                width={50}
-                height={50}
-                className="w-5 h-5 mt-1"
+                width={20}
+                height={20}
+                className="mt-1"
               />
               <div>
                 <p>Call us on</p>
@@ -139,13 +157,13 @@ export default function ContactForm() {
               </div>
             </div>
 
-            <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border">
+            <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border border-zinc-800">
               <Image
                 src="/contact-icon (2).png"
                 alt="Location icon"
-                width={50}
-                height={50}
-                className="w-5 h-6 mt-1"
+                width={20}
+                height={24}
+                className="mt-1"
               />
               <div>
                 <p className="text-lg">1234 Placeholder Lane</p>
@@ -154,13 +172,13 @@ export default function ContactForm() {
               </div>
             </div>
 
-            <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border">
+            <div className="bg-zinc-900 rounded-2xl p-6 flex items-start gap-4 border border-zinc-800">
               <Image
                 src="/contact-icon (3).png"
                 alt="Support icon"
-                width={50}
-                height={50}
-                className="w-7 h-6 mt-1"
+                width={28}
+                height={24}
+                className="mt-1"
               />
               <div>
                 <p>
