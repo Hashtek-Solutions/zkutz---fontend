@@ -1,59 +1,40 @@
+// ContactForm.tsx
 "use client";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef } from "react";
 import { toast } from "sonner";
+import { useFormStatus } from "react-dom";
+import { sendContactEmail } from "@/actions/contact";
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      type="submit"
+      disabled={pending}
+      className="bg-white text-black hover:bg-gray-100 rounded-full px-8"
+    >
+      {pending ? "Sending..." : "Send Message"}
+    </Button>
+  );
+}
 
 export default function ContactForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: ""
-  });
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  async function handleSubmit(formData: FormData) {
+    const result = await sendContactEmail(formData);
 
-  const resetForm = () => {
-    setFormData({
-      name: "",
-      email: "",
-      message: ""
-    });
-  };
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: { "Content-Type": "application/json" },
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        toast.success("Message sent successfully!");
-        resetForm();
-      } else {
-        toast.error(result.error || "Failed to send message");
-      }
-    } catch (error) {
-      toast.error("An error occurred. Please try again.");
-    } finally {
-      setIsSubmitting(false);
+    if (result.success) {
+      toast.success("Message sent successfully!");
+      formRef.current?.reset();
+    } else {
+      toast.error(result.error || "Failed to send message");
     }
   }
 
@@ -68,7 +49,7 @@ export default function ContactForm() {
             back to you shortly:
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form ref={formRef} action={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm mb-2">
                 Name
@@ -77,8 +58,6 @@ export default function ContactForm() {
                 id="name"
                 name="name"
                 required
-                value={formData.name}
-                onChange={handleChange}
                 placeholder="Type full name here"
                 className="bg-zinc-900 rounded-full border-zinc-800 text-white placeholder:text-zinc-500"
               />
@@ -93,8 +72,6 @@ export default function ContactForm() {
                 name="email"
                 type="email"
                 required
-                value={formData.email}
-                onChange={handleChange}
                 placeholder="Enter Email"
                 className="bg-zinc-900 rounded-full border-zinc-800 text-white placeholder:text-zinc-500"
               />
@@ -108,20 +85,12 @@ export default function ContactForm() {
                 id="message"
                 name="message"
                 required
-                value={formData.message}
-                onChange={handleChange}
                 rows={6}
                 className="bg-zinc-900 rounded-2xl border-zinc-800 text-white placeholder:text-zinc-500 resize-none"
               />
             </div>
 
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              className="bg-white text-black hover:bg-gray-100 rounded-full px-8"
-            >
-              {isSubmitting ? "Sending..." : "Send Message"}
-            </Button>
+            <SubmitButton />
           </form>
         </div>
 
