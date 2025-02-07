@@ -4,10 +4,10 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
 const ses = new SESClient({
-  region: process.env.AWS_REGION!,
+  region: process.env.NEXT_AWS_REGION!,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    accessKeyId: process.env.NEXT_AWS_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.NEXT_AWS_SECRET_ACCESS_KEY!,
   },
 });
 
@@ -18,8 +18,8 @@ export async function sendContactEmail(formData: FormData) {
     const message = formData.get("message") as string;
 
     const command = new SendEmailCommand({
-      Source: process.env.AWS_SES_VERIFIED_EMAIL!,
-      Destination: { ToAddresses: [process.env.AWS_SES_VERIFIED_EMAIL!] },
+      Source: process.env.NEXT_AWS_SES_VERIFIED_EMAIL!,
+      Destination: { ToAddresses: [process.env.NEXT_AWS_SES_VERIFIED_EMAIL!] },
       Message: {
         Subject: { Data: `New Enquiry from ${name}` },
         Body: {
